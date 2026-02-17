@@ -12,8 +12,12 @@ add_executable(FokkerModbusLibTests
     RTU/modbus_RTU_client_tests.cpp
 )
 
+target_include_directories(FokkerModbusLibTests
+     PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/gmock)
+
 target_link_libraries(FokkerModbusLibTests
-    PRIVATE FokkerModbusRtuClient
+    PRIVATE FokkerModbusLib
     PRIVATE GTest::gtest_main
 )
 

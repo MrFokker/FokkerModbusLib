@@ -26,8 +26,16 @@ void ModbusRtuClient::BuildFrame()
 void ModbusRtuClient::ParseFrame()
 {
 }
-void ModbusRtuClient::HandleReceiveComplete(ModbusPortInterface::PortResult, uint16_t)
+void ModbusRtuClient::HandleReceiveComplete(ModbusPortInterface::PortResult, uint16_t length)
 {
+    if (!Framer::ValidateResponse(data, length))
+    {
+    }
+
+    // Parse PDU (shared)
+    HandlePDU(...);
+    // Wrap response
+    Framer::WrapResponse(m_writer);
     ParseFrame();
 }
 void ModbusRtuClient::HandleTransmitComplete(ModbusPortInterface::PortResult)

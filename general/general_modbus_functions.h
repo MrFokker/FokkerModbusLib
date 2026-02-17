@@ -1,11 +1,9 @@
 // Functions that can be used by both Modbus Clients and Servers
 // Not all functions have to be used by both
 
-#ifndef FOKKER_MODBUS_SHARED_FUNCTIONS
-#define FOKKER_MODBUS_SHARED_FUNCTIONS
+#ifndef FOKKER_MODBUS_GENERAL_FUNCTIONS
+#define FOKKER_MODBUS_GENERAL_FUNCTIONS
 
-#include "etl/byte_stream.h"
-#include "etl/vector.h"
 #include "etl/optional.h"
 #include "etl/array_view.h"
 
@@ -127,8 +125,8 @@ protected:
     }
     void GetAppData()
     {
-        // m_request.m_appdata = {m_reader.end(), m_reader.end() +  m_request.m_registerCount};
         m_reader.restart(m_reader.size_bytes() + (m_request.m_registerCount * 2));
+        // m_request.m_appdata = {m_reader.end(), m_reader.end() +  m_request.m_registerCount};
     }
 
     uint16_t CalculateCrc(const etl::array_view<const BufferDataType>& view)

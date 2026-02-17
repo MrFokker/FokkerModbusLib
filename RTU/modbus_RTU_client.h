@@ -1,6 +1,7 @@
 #include "etl/array.h"
 #include "general_modbus_functions.h"
-#include "modbus_RTU_port.h"
+#include "modbus_port_interface.h"
+#include "modbus_RTU_framer.h
 
 #ifndef FOKKER_MODBUS_RTU_CLIENT
 #define FOKKER_MODBUS_RTU_CLIENT

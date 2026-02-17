@@ -21,6 +21,8 @@ public:
     };
 
     ModbusPortInterface() = default;
+    virtual ~ModbusPortInterface() = default;
+
     using ReceiveCallback = etl::delegate<void(PortResult, uint16_t)>; // count
     using TransmitCallback = etl::delegate<void(PortResult)>;
 

@@ -1,10 +1,14 @@
-#include "modbus_RTU_client.h"
+#include "modbus_client.h"
+#include "RTU_framer.h"
+#include "modbus_port_mock.h"
 
 #include <gtest/gtest.h>
 
 class RtuClientTestFixture
 {
-    ModbusRtuClient m_client;
+    NiceMock<ModbusRtuPortMock> m_portMock;
+    ModbusClient<RTUFramer> m_client {m_portMock};
+    // ModbusRtuClient m_client;
 };
 
 TEST(RtuClientTestFixture, BasicTest)

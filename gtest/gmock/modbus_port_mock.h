@@ -4,7 +4,7 @@
 #define FOKKER_MODBUS_RTU_PORT_MOCK_H_
 
 #include <gmock/gmock.h>
-#include "ITransport.h"
+#include "modbus_port_interface.h"
 
 class ModbusRtuPortMock : public ModbusPortInterface
 {
