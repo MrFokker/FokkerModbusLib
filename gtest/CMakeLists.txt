@@ -18,7 +18,7 @@ target_include_directories(FokkerModbusLibTests
 
 target_link_libraries(FokkerModbusLibTests
     PRIVATE FokkerModbusLib
-    PRIVATE GTest::gtest_main
+    PRIVATE GTest::gmock_main
 )
 
 include(GoogleTest)

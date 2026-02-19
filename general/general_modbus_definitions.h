@@ -4,23 +4,24 @@
 #ifndef FOKKER_MODBUS_GENENERAL_DEFINITIONS_H_
 #define FOKKER_MODBUS_GENENERAL_DEFINITIONS_H_
 
-#include "etl/optional.h"
-#include "etl/array_view.h"
-#include "etl/delegate.h"
+#include <cstdint>
 
+namespace Fokker {
 class ModbusDefinitions
 {
-    constexpr uint8_t MSB(uint16_t value)
+public:
+    static constexpr uint8_t LSB(uint16_t value) noexcept
     {
-        return value & 0xFF00;
-    }
-    constexpr uint8_t LSB(uint16_t value)
+        return static_cast<uint8_t>(value);
+    };
+    static constexpr uint8_t MSB(uint16_t value) noexcept
     {
-        return value & 0x00FF;
-    } 
+        return static_cast<uint8_t>(value >> 8);
+    };
 
     enum class FunctionCodes
     {
+        DEFAULT_VALUE = 0x00,
         READ_COILS = 0x01,
         READ_DISCRETE_INPUTS = 0x02,
         READ_HOLDING_REGISTERS = 0x03,
@@ -38,5 +39,6 @@ class ModbusDefinitions
         READ_DEVICE_IDENTIFICATION_2 = 0x2B,
     };
 };
+} // namespace Fokker
 
 #endif // FOKKER_MODBUS_GENENERAL_DEFINITIONS_H_

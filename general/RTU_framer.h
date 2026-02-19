@@ -24,7 +24,7 @@ struct RTUFramer
     }
 
     // Build frame
-    static inline bool BuildAduFrame(uint8_t targetAddress, const uint8_t* buffer, uint8_t pduSize)
+    static inline bool BuildAduFrame(const uint8_t targetAddress, uint8_t* buffer, const uint8_t pduSize)
     {
         if ((pduSize + ADU_BEGIN_SIZE_BYTES + ADU_END_SIZE_BYTES) > MAX_PDU_SIZE) 
         {
@@ -38,11 +38,11 @@ struct RTUFramer
     }
 
     // Parse frame
-    static inline bool ValidateAduFrame(uint8_t targetAddress, const uint8_t* buffer, uint8_t aduSize)
+    static inline bool ValidateAduFrame(const uint8_t targetAddress, const uint8_t* buffer, const uint8_t aduSize)
     {
         uint16_t crc = CalcCRC16(buffer, aduSize - ADU_END_SIZE_BYTES);
-        return (aduSize < 5) &&  (targetAddress == buffer[0]) && (ModbusDefinitions::LSB(crc) == buffer[aduSize - 2]) && (ModbusDefinitions::MSB(crc) == buffer[aduSize - 1])
+        return (aduSize < 5) &&  (targetAddress == buffer[0]) && (ModbusDefinitions::LSB(crc) == buffer[aduSize - 2]) && (ModbusDefinitions::MSB(crc) == buffer[aduSize - 1]);
     }
 };
 
-// FOKKER_MODBUS_RTU_FRAMER_H_
+#endif // FOKKER_MODBUS_RTU_FRAMER_H_

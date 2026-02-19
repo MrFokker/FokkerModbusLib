@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug LibTests (MSVC)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/gtest/Debug/FokkerModbusLibTests.exe",
+      "args": [
+        "--gtest_break_on_failure",
+        "--gtest_catch_exceptions=0"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false
+    }
+  ]
+}

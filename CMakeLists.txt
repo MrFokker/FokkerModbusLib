@@ -12,24 +12,21 @@ option(BUILD_TESTS "Build unit tests" ON)
 add_subdirectory(../etl etl_build EXCLUDE_FROM_ALL)
 
 # ---- Library ----
-add_library(FokkerModbusLib
-    client/modbus_client.cpp
-)
-
+add_library(FokkerModbusLib INTERFACE)
 
 target_include_directories(FokkerModbusLib
-    PUBLIC
+    INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/general
         ${CMAKE_CURRENT_SOURCE_DIR}/client
 )
 
 target_link_libraries(FokkerModbusLib
-    PUBLIC 
+    INTERFACE 
         etl
 )
 
 target_compile_definitions(FokkerModbusLib
-    PUBLIC ETL_ENDIAN_NATIVE=0
+    INTERFACE ETL_ENDIAN_NATIVE=0
 )
 
 # ---- Tests ----

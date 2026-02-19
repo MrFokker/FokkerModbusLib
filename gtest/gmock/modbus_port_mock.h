@@ -9,8 +9,10 @@
 class ModbusRtuPortMock : public ModbusPortInterface
 {
 public:
-    MOCK_MEHTOD(bool, Receive, (etl::array_view<BufferDataType>, uint16_t timeoutMs, const ReceiveCallback &), (override));
-    MOCK_MEHTOD(bool, Transmit, (etl::array_view<BufferDataType>, const TransmitCallback &), (override));
+    MOCK_METHOD(void, Start, (), (override));
+
+    MOCK_METHOD(bool, Receive, (etl::array_view<uint8_t>, uint16_t timeoutMs, const ModbusPortInterface::ReceiveCallback &), (override));
+    MOCK_METHOD(bool, Transmit, (etl::array_view<uint8_t>, const ModbusPortInterface::TransmitCallback &), (override));
 };
 
 #endif // FOKKER_MODBUS_RTU_PORT_MOCK_H_
