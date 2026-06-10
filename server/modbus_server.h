@@ -1,7 +1,7 @@
 #include "etl/array.h"
 
-#ifndef FOKKER_MODBUS_CLIENT_H_
-#define FOKKER_MODBUS_CLIENT_H_
+#ifndef FOKKER_MODBUS_SERVER_H_
+#define FOKKER_MODBUS_SERVER_H_
 
 template<typename Framer>
 class ModbusServer
@@ -45,4 +45,4 @@ private:
 //     ModbusPortInterface& m_port;
 // };
 
-// #endif // FOKKER_MODBUS_CLIENT_H_
+// #endif // FOKKER_MODBUS_SERVER_H_

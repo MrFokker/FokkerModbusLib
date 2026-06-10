@@ -6,29 +6,49 @@
 struct TCPFramer
 {
     // Constants
-    static constexpr uint16_t MAX_PDU_SIZE = 260;
     static constexpr uint16_t ADU_BEGIN_SIZE_BYTES  = 7;
     static constexpr uint16_t ADU_END_SIZE_BYTES  = 0;
+    static constexpr uint16_t MINIMUM_PDU_SIZE = ADU_BEGIN_SIZE_BYTES + ADU_END_SIZE_BYTES + ModbusDefinitions::MINIMUM_ADU_SIZE;
+    static constexpr uint16_t MAX_PDU_SIZE = 260;
+    static constexpr uint16_t MODBUS_PROTOCOL_ID = 0;
 
     // Build frame
-    static inline bool BuildAduFrame(const uint8_t targetAddress, uint8_t* buffer, const uint8_t pduSize)
+    static inline bool BuildAduFrame(uint8_t* buffer, const uint8_t pduSize,  const uint16_t transactionId, const uint8_t unitId)
     {
         if ((pduSize + ADU_BEGIN_SIZE_BYTES + ADU_END_SIZE_BYTES) > MAX_PDU_SIZE) 
         {
             return false;
         }
-        buffer[0] = targetAddress;
-        uint16_t crc = CalcCRC16(buffer, ADU_BEGIN_SIZE_BYTES + pduSize);
-        buffer[ADU_BEGIN_SIZE_BYTES + pduSize] = ModbusDefinitions::LSB(crc);
-        buffer[ADU_BEGIN_SIZE_BYTES + pduSize + 1] = ModbusDefinitions::MSB(crc);
+        const uint16_t length = pduSize + sizeof(unitId);
+
+        buffer[0] = ModbusDefinitions::MSB(transactionId);
+        buffer[1] = ModbusDefinitions::LSB(transactionId);
+        buffer[2] = ModbusDefinitions::MSB(MODBUS_PROTOCOL_ID);
+        buffer[3] = ModbusDefinitions::LSB(MODBUS_PROTOCOL_ID);
+        buffer[4] = ModbusDefinitions::MSB(length);
+        buffer[5] = ModbusDefinitions::LSB(length);
+        buffer[6] = unitId;
         return true;
     }
 
     // Parse frame
-    static inline bool ValidateAduFrame(const uint8_t targetAddress, const uint8_t* buffer, const uint8_t aduSize)
+    static inline bool ValidateAduFrame(const uint8_t* buffer, const uint8_t aduSize, const uint16_t transactionId, const uint8_t unitId)
     {
-        uint16_t crc = CalcCRC16(buffer, aduSize - ADU_END_SIZE_BYTES);
-        return (aduSize < 5) &&  (targetAddress == buffer[0]) && (ModbusDefinitions::LSB(crc) == buffer[aduSize - 2]) && (ModbusDefinitions::MSB(crc) == buffer[aduSize - 1]);
+        if ((aduSize <MINIMUM_PDU_SIZE) || (aduSize > MAX_PDU_SIZE))
+        {
+            return false;
+        }
+        const uint16_t expectedLength = aduSize - 6;
+
+        bool success = true;
+        success = success && (buffer[0] == ModbusDefinitions::MSB(transactionId));
+        success = success && (buffer[1] == ModbusDefinitions::LSB(transactionId));
+        success = success && (buffer[2] == ModbusDefinitions::MSB(MODBUS_PROTOCOL_ID));
+        success = success && (buffer[3] == ModbusDefinitions::LSB(MODBUS_PROTOCOL_ID));
+        success = success && (buffer[4] == ModbusDefinitions::MSB(expectedLength));
+        success = success && (buffer[5] == ModbusDefinitions::LSB(expectedLength));
+        success = success && (buffer[6] == unitId);  
+        return success;
     }
 };
 

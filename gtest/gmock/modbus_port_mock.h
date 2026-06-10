@@ -10,6 +10,7 @@ class ModbusRtuPortMock : public ModbusPortInterface
 {
 public:
     MOCK_METHOD(void, Start, (), (override));
+    MOCK_METHOD(void, Cleanup, (), (override));
 
     MOCK_METHOD(bool, Receive, (etl::array_view<uint8_t>, uint16_t timeoutMs, const ModbusPortInterface::ReceiveCallback &), (override));
     MOCK_METHOD(bool, Transmit, (etl::array_view<uint8_t>, const ModbusPortInterface::TransmitCallback &), (override));

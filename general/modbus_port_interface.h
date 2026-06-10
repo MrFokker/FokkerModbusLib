@@ -26,7 +26,8 @@ public:
     using ReceiveCallback = etl::delegate<void(PortResult, uint16_t)>; // count
     using TransmitCallback = etl::delegate<void(PortResult)>;
 
-    virtual void Start() = 0;
+    virtual void Start() {};
+    virtual void Cleanup() {};
 
     virtual bool Receive(etl::array_view<uint8_t> transmitBuffer, uint16_t timeoutMs, const ReceiveCallback &receiveCallback) = 0;
     virtual bool Transmit(etl::array_view<uint8_t> transmitBuffer, const TransmitCallback &transmitCallback) = 0;

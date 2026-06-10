@@ -11,7 +11,11 @@
         enum class Result
         {
             NO_ERROR = 0,
-            SHIT_HAPPEND = 1,
+            SHIT_HAPPEND,
+            TRANSMIT_ERROR,
+            RECEIVE_ERROR,
+            DECODING_FAILURE,
+            ERROR_RESPONSE,
         };
         using DoneCallback = etl::delegate<void(Result)>;
 
