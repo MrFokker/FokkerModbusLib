@@ -1,0 +1,55 @@
+BasedOnStyle: LLVM
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+# Braces
+BreakBeforeBraces: Linux
+
+# Line length
+ColumnLimit: 140
+
+# This is the key behavior for alignment under first parameter
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+BinPackArguments: false
+
+# Alignment
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignOperands: false
+AlignTrailingComments: true
+
+# Prevent weird line breaks around '='
+PenaltyBreakAssignment: 1000
+# PenaltyBreakBeforeBinaryOperator: 1000
+
+# Pointers / references
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# Spaces
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# Short statements
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+
+# Constructor formatting
+BreakConstructorInitializersBeforeComma: false
+ConstructorInitializerIndentWidth: 4
+
+# Empty lines
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+
+# Includes
+SortIncludes: true
+
+# C++
+Standard: Latest
