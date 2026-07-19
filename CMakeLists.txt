@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # ---- Options ----
-option(BUILD_TESTS "Build unit tests" ON)
+option(BUILD_FOKKER_LIB_TESTS "Build unit tests" ON)
 
 # ---- ETL ----
 add_subdirectory(../etl etl_build EXCLUDE_FROM_ALL)
@@ -30,7 +30,7 @@ target_compile_definitions(FokkerModbusLib
 )
 
 # ---- Tests ----
-if(BUILD_TESTS)
+if(BUILD_FOKKER_LIB_TESTS)
     enable_testing()
     add_subdirectory(gtest)
 endif()

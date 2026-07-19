@@ -44,6 +44,18 @@ class RtuClientTestFixture : public ::testing::Test
     }
 };
 
+TEST_F(RtuClientTestFixture, ReadHoldingRegisters_Busy_after_request_send)
+{
+    EXPECT_CALL(m_portMock, Transmit(_, _));
+    uint16_t output[2] = {};
+
+    EXPECT_FALSE(m_client.IsBusy());
+
+    m_client.ReadHoldingRegisters(0x01, 0x0010, 2, output, {});
+
+    EXPECT_TRUE(m_client.IsBusy());
+}
+
 // Hardcoded happy flow tests
 TEST_F(RtuClientTestFixture, ReadHoldingRegisters_Request1)
 {

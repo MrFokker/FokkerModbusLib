@@ -9,7 +9,7 @@ struct TCPFramer {
     static constexpr uint16_t ADU_END_SIZE_BYTES   = 0;
     static constexpr uint16_t MINIMUM_PDU_SIZE     = ADU_BEGIN_SIZE_BYTES + ADU_END_SIZE_BYTES + ModbusDefinitions::MINIMUM_ADU_SIZE;
     static constexpr uint16_t MAX_PDU_SIZE         = 260;
-    static constexpr uint16_t MODBUS_PROTOCOL_ID   = 0;
+    static constexpr uint16_t MODBUS_PROTOCOL_ID   = 0x0000;
 
     // Build frame
     static inline bool BuildAduFrame(uint8_t* buffer, const uint8_t pduSize, const uint16_t transactionId, const uint8_t unitId)

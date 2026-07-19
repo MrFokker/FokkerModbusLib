@@ -10,6 +10,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(FokkerModbusLibTests
     RTU/modbus_RTU_client_tests.cpp
+    TCP/modbus_TCP_client_tests.cpp
 )
 
 target_include_directories(FokkerModbusLibTests
