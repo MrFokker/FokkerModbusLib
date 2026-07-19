@@ -35,6 +35,7 @@ ReferenceAlignment: Left
 SpaceBeforeParens: ControlStatements
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
+NamespaceIndentation: All
 
 # Short statements
 AllowShortFunctionsOnASingleLine: Empty
@@ -43,6 +44,7 @@ AllowShortIfStatementsOnASingleLine: Never
 # Constructor formatting
 BreakConstructorInitializersBeforeComma: false
 ConstructorInitializerIndentWidth: 4
+BreakTemplateDeclarations: Yes
 
 # Empty lines
 KeepEmptyLinesAtTheStartOfBlocks: false

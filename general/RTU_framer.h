@@ -43,9 +43,11 @@ struct RTUFramer {
 
         const uint16_t calculatedCrc = CalcCRC16(buffer, aduSize - ADU_END_SIZE_BYTES);
         bool           valid         = true;
-        valid                        = valid && (targetAddress == buffer[0]);
-        valid                        = valid && (ModbusDefinitions::LSB(calculatedCrc) == buffer[aduSize - 2]);
-        valid                        = valid && (ModbusDefinitions::MSB(calculatedCrc) == buffer[aduSize - 1]);
+
+        valid = valid && (targetAddress == buffer[0]);
+        valid = valid && (ModbusDefinitions::LSB(calculatedCrc) == buffer[aduSize - 2]);
+        valid = valid && (ModbusDefinitions::MSB(calculatedCrc) == buffer[aduSize - 1]);
+
         return valid;
     }
 };

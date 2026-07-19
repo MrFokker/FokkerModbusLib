@@ -8,10 +8,12 @@
 #include "etl/array.h"
 #include "etl/byte_stream.h"
 
-template <typename Framer> class ModbusClient : public ModbusClientInterface
+template <typename Framer>
+class ModbusClient : public ModbusClientInterface
 {
   public:
     ModbusClient(ModbusPortInterface& port) : m_port(port) {}
+
     void Start() override
     {
         m_currentRequest = RequestAdministration{};

@@ -4,8 +4,8 @@
 #ifndef FOKKER_MODBUS_GENERAL_FUNCTIONS
 #define FOKKER_MODBUS_GENERAL_FUNCTIONS
 
-#include "etl/optional.h"
 #include "etl/array_view.h"
+#include "etl/optional.h"
 
 namespace
 {
@@ -20,38 +20,37 @@ namespace
         return value & 0x00FF;
     }
 
-}
+} // namespace
 
 class ModbusHelperClass
 {
-public:
-    static constexpr size_t MODBUS_MAX_FRAME_SIZE_BYTES = 260;
-    static constexpr etl::endian BUFFER_ENDIAN = etl::endian::big;
+  public:
+    static constexpr size_t      MODBUS_MAX_FRAME_SIZE_BYTES = 260;
+    static constexpr etl::endian BUFFER_ENDIAN               = etl::endian::big;
 
     using BufferDataType = uint8_t;
-    using ReceiveBuffer = etl::array<BufferDataType, MODBUS_MAX_FRAME_SIZE_BYTES>;
-    using SentBuffer = ReceiveBuffer;
-    using ReceiveCount = uint16_t;
-    using AppDataView = etl::array_view<const BufferDataType>;
+    using ReceiveBuffer  = etl::array<BufferDataType, MODBUS_MAX_FRAME_SIZE_BYTES>;
+    using SentBuffer     = ReceiveBuffer;
+    using ReceiveCount   = uint16_t;
+    using AppDataView    = etl::array_view<const BufferDataType>;
 
-    struct RequestAdministration
-    {
-        uint8_t m_targetAddress = 0;
-        uint8_t m_functionCode = 0x00;
+    struct RequestAdministration {
+        uint8_t  m_targetAddress   = 0;
+        uint8_t  m_functionCode    = 0x00;
         uint16_t m_registerAddress = 0x00;
-        uint16_t m_registerCount = 0;
-        uint16_t m_transactionId = 0; // Only needed for TCP
-        uint16_t m_protocolId = 0;    // Only needed for
+        uint16_t m_registerCount   = 0;
+        uint16_t m_transactionId   = 0; // Only needed for TCP
+        uint16_t m_protocolId      = 0; // Only needed for
 
-        uint16_t m_timeoutMs = 0;
+        uint16_t               m_timeoutMs        = 0;
         etl::optional<uint8_t> m_retriesRemaining = {};
 
         ReceiveCount m_receiveCount = 0;
-        AppDataView m_appdata;
+        AppDataView  m_appdata;
     };
 
-protected:
-    ModbusHelperClass(const ReceiveBuffer &receiveBuffer, ReceiveBuffer &sentBuffer)
+  protected:
+    ModbusHelperClass(const ReceiveBuffer& receiveBuffer, ReceiveBuffer& sentBuffer)
         : m_reader(receiveBuffer.begin(), receiveBuffer.end(), BUFFER_ENDIAN), m_writer(sentBuffer.begin(), sentBuffer.end(), BUFFER_ENDIAN)
     {
     }
@@ -62,15 +61,14 @@ protected:
         m_writer.restart();
     }
 
-    void NewRequest(const RequestAdministration &request)
+    void NewRequest(const RequestAdministration& request)
     {
         m_request = request;
         ResetByteStream();
     }
     void NewRequest(const ReceiveCount receiveCount)
     {
-        if (receiveCount <= MODBUS_MAX_FRAME_SIZE_BYTES)
-        {
+        if (receiveCount <= MODBUS_MAX_FRAME_SIZE_BYTES) {
             m_request = {};
             ResetByteStream();
         }
@@ -144,10 +142,10 @@ protected:
         return false;
     }
 
-private:
+  private:
     etl::byte_stream_reader m_reader;
     etl::byte_stream_writer m_writer;
-    RequestAdministration m_request;
+    RequestAdministration   m_request;
 };
 
 #endif // FOKKER_MODBUS_SHARED_FUNCTIONS
